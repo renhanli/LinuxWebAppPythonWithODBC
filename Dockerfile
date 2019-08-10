@@ -1,13 +1,3 @@
-# Azure App Service (Linux): Python using ODBC driver access Azure SQL server
-Using Python + ODBC in custom docker image
-
-The custom docker image is created base on the Azure App Service build-in Python docker image:
-
-
-[Python 3.7 Build-in Docker image](https://github.com/Azure-App-Service/python/tree/master/3.7)
-
-### Modified Dockerfile should look like this
-```
 FROM mcr.microsoft.com/oryx/python:3.7-20190712.5
 LABEL maintainer="appsvc-images@microsoft.com"
 
@@ -28,8 +18,6 @@ RUN apt-get update \
     && pip install virtualenv \
     && pip install flask 
 
-<b>
-# Install ODBC driver
 RUN apt-get update && apt-get install -y \
     curl apt-utils apt-transport-https debconf-utils gcc build-essential
 
@@ -46,7 +34,6 @@ RUN apt-get update \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* \
 && rm -rf /tmp/*
-</b>
 
 WORKDIR ${HOME_SITE}
 
@@ -68,15 +55,12 @@ RUN mkdir /opt/defaultsite
 COPY hostingstart.html /opt/defaultsite
 COPY application.py /opt/defaultsite
 
-<b>
 # install requirements.txt
 COPY requirements.txt ${HOME_SITE}
 RUN pip install -r requirements.txt
-</b>
 
 # configure startup
 RUN chmod -R 777 /opt/startup
 COPY entrypoint.py /usr/local/bin
 
 ENTRYPOINT ["/opt/startup/init_container.sh"]
-```
