@@ -28,7 +28,6 @@ RUN apt-get update \
     && pip install virtualenv \
     && pip install flask 
 
-<b>
 # Install ODBC driver
 RUN apt-get update && apt-get install -y \
     curl apt-utils apt-transport-https debconf-utils gcc build-essential
@@ -46,7 +45,6 @@ RUN apt-get update \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* \
 && rm -rf /tmp/*
-</b>
 
 WORKDIR ${HOME_SITE}
 
@@ -68,11 +66,9 @@ RUN mkdir /opt/defaultsite
 COPY hostingstart.html /opt/defaultsite
 COPY application.py /opt/defaultsite
 
-<b>
 # install requirements.txt
 COPY requirements.txt ${HOME_SITE}
 RUN pip install -r requirements.txt
-</b>
 
 # configure startup
 RUN chmod -R 777 /opt/startup
